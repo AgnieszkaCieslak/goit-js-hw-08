@@ -1,1 +1,0 @@
-{"mappings":"","sources":["index.83d813f6.css","src/scss/index.scss"],"sourcesContent":["\n\n/*# sourceMappingURL=index.83d813f6.css.map */\n","@import '/src/scss/01-gallery';\n@import '/src/scss/03-feedback';\n@import '/src/scss/common';"],"names":[],"version":3,"file":"index.83d813f6.css.map"}
