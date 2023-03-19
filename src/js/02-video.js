@@ -1,21 +1,23 @@
-import throttle from 'lodash.throttle'
-import Vimeo from '@vimeo/player';
-
-const localStorageKey = 'videoplayer-current-time';
-const throttleUpdatedTime = 1000;
-
-const player = new Vimeo('vimeo-player');
-player.setCurrentTime(getSavedTime());
+import throttle from 'lodash.throttle';
+import Player from '@vimeo/player';
 
 
-function saveTimeLocal(time) {
-  localStorage.setItem(localStorageKey, String(time));
-}
-function timeUpdate({seconds}) {
-  saveTimeLocal(seconds);
-}
-function getSavedTime() {
-  return Number(localStorage.getItem(localStorageKey)) || 0;
+const LOCAL_KEY = 'videoplayer-current-time';
+const THROTTLE_TIME = 1000;
+
+const player = new Player('vimeo-player');
+player.setCurrentTime(getSavedVideoTime());
+
+player.on('timeupdate', throttle(onTimeupdate, THROTTLE_TIME));
+
+function onTimeupdate({ seconds }) {
+  saveVideoTimeToLocal(seconds);
 }
 
-player.on('updatedTime', throttle(timeUpdate, throttleUpdatedTime));
+function saveVideoTimeToLocal(time) {
+  localStorage.setItem(LOCAL_KEY, String(time));
+}
+
+function getSavedVideoTime() {
+  return Number(localStorage.getItem(LOCAL_KEY)) || 0;
+}
